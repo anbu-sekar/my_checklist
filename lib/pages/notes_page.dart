@@ -49,7 +49,7 @@ class _NotesPageState extends State<NotesPage> {
           child: isLoading
               ? CircularProgressIndicator()
               : notes.isEmpty
-                  ? const Text (
+                  ? const Text(
                       'Create Category',
                       style: TextStyle(color: Colors.white, fontSize: 24),
                     )

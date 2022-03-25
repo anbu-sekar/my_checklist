@@ -2,7 +2,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../model/checkListData.dart';
 
-///Initiate DataBase
+///DataBase Configuraions
+  //Initiate DataBase
 class NotesDatabase {
   static final NotesDatabase instance = NotesDatabase._init();
 
@@ -17,7 +18,7 @@ class NotesDatabase {
     return _database!;
   }
 
-  ///Setting DataBase Path
+  //Setting DataBase Path
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
@@ -25,36 +26,51 @@ class NotesDatabase {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  ///Create DataBase
+  //Create DataBase
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
     const boolType = 'BOOLEAN NOT NULL';
     const integerType = 'INTEGER NOT NULL';
 
+
     await db.execute('''
-    CREATE TABLE $checkListDatabase ( 
+    CREATE TABLE $checkListCategory ( 
   ${CheckListCategoryData.id} $idType, 
   ${CheckListCategoryData.category} $textType,
   ${CheckListCategoryData.time} $textType
   )
+    CREATE TABLE $checkLists (
+    
+    )
 ''');
+
+
   }
 
-  ///Create Category
+  //Close Database
+  Future close() async {
+    final db = await instance.database;
+    db.close();
+  }
+
+
+
+  ///Category TABLE Operations
+  //Create Category
   Future<CheckListCategory> create(CheckListCategory note) async {
     final db = await instance.database;
 
-    final id = await db.insert(checkListDatabase, note.toJson());
+    final id = await db.insert(checkListCategory, note.toJson());
     return note.copy(id: id);
   }
 
-  ///Fetch Lists
+  //Fetch Lists
   Future<CheckListCategory> readNote(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
-      checkListDatabase,
+      checkListCategory,
       columns: CheckListCategoryData.values,
       where: '${CheckListCategoryData.id} = ?',
       whereArgs: [id],
@@ -67,22 +83,22 @@ class NotesDatabase {
     }
   }
 
-  ///Get category from database
+  //Get category from database
   Future<List<CheckListCategory>> readAllNotes() async {
     final db = await instance.database;
 
     const orderBy = '${CheckListCategoryData.time} ASC';
-    final result = await db.query(checkListDatabase, orderBy: orderBy);
+    final result = await db.query(checkListCategory, orderBy: orderBy);
 
     return result.map((json) => CheckListCategory.fromJson(json)).toList();
   }
 
-  ///Update Category
+  //Update Category
   Future<int> update(CheckListCategory note) async {
     final db = await instance.database;
 
     return db.update(
-      checkListDatabase,
+      checkListCategory,
       //CheckListCategory.toJson(),
       note.toJson(),
       where: '${CheckListCategoryData.id} = ?',
@@ -90,21 +106,19 @@ class NotesDatabase {
     );
   }
 
-  ///Delete Category from Data Base
+  //Delete Category from Data Base
   Future<int> delete(int id) async {
     final db = await instance.database;
 
     return await db.delete(
-      checkListDatabase,
+      checkListCategory,
       where: '${CheckListCategoryData.id} = ?',
       whereArgs: [id],
     );
   }
 
-  ///Close Database
-  Future close() async {
-    final db = await instance.database;
-    db.close();
-  }
+
+  /// CheckList Table Operations
+
 
 }

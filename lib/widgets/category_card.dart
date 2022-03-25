@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../model/checkListData.dart';
 
-
 final _lightColors = [
   Colors.amber.shade300,
   Colors.lightGreen.shade300,

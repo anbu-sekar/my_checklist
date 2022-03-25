@@ -10,12 +10,14 @@ class AddEditNotePage extends StatefulWidget {
     Key? key,
     this.note,
   }) : super(key: key);
+
   @override
   _AddEditNotePageState createState() => _AddEditNotePageState();
 }
 
 class _AddEditNotePageState extends State<AddEditNotePage> {
   final _formKey = GlobalKey<FormState>();
+
   // late bool isImportant;
   // late int number;
   // late String title;
@@ -29,30 +31,29 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      actions: [buildButton()],
-    ),
-    body: Form (
-      key: _formKey,
-      child:  NoteFormWidget(
-        category: category,
-        onChangedCategory: (category) =>
-            setState(() => this.category = category),
-      ),
+        appBar: AppBar(
+          actions: [buildButton()],
+        ),
+        body: Form(
+          key: _formKey,
+          child: NoteFormWidget(
+            category: category,
+            onChangedCategory: (category) =>
+                setState(() => this.category = category),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          child: Icon(Icons.add),
+          onPressed: () async {
+            await Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => AddEditNotePage()),
+            );
 
-    ),
-    floatingActionButton: FloatingActionButton(
-      backgroundColor: Colors.black,
-      child: Icon(Icons.add),
-      onPressed: () async {
-        await Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => AddEditNotePage()),
-        );
-
-        //add refresh opration;
-      },
-    ),
-  );
+            //add refresh opration;
+          },
+        ),
+      );
 
   Widget buildButton() {
     final isFormValid = category.isNotEmpty && category.isNotEmpty;
@@ -95,7 +96,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   }
 
   Future addNote() async {
-    final note = CheckListCategory (
+    final note = CheckListCategory(
       category: category,
       createdTime: DateTime.now(),
     );

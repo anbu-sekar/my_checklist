@@ -21,7 +21,6 @@ class NoteFormWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-
               buildTitle(),
               SizedBox(height: 8),
               buildDescription(),
@@ -44,8 +43,9 @@ class NoteFormWidget extends StatelessWidget {
           hintText: 'Title',
           hintStyle: TextStyle(color: Colors.white70),
         ),
-        validator: (title) =>
-            title != null && title.isEmpty ? 'The category cannot be empty' : null,
+        validator: (title) => title != null && title.isEmpty
+            ? 'The category cannot be empty'
+            : null,
         onChanged: onChangedCategory,
       );
 
