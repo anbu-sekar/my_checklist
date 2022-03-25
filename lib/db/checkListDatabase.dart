@@ -2,7 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../model/checkListData.dart';
 
-//Initate DataBase
+///Initiate DataBase
 class NotesDatabase {
   static final NotesDatabase instance = NotesDatabase._init();
 
@@ -101,6 +101,7 @@ class NotesDatabase {
     );
   }
 
+  ///Close Database
   Future close() async {
     final db = await instance.database;
     db.close();
