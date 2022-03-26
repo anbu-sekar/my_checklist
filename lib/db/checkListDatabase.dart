@@ -41,10 +41,13 @@ class NotesDatabase {
   ${CheckListCategoryData.time} $textType
   )
     CREATE TABLE $checkLists (
-    
+    ${CheckListsData.id}  $idType,
+    ${CheckListsData.checkList}  $textType,
+    ${CheckListsData.checkListStatus}  $boolType,
+    ${CheckListsData.time}  $textType,
+    ${CheckListsData.categoryId}  $integerType,
     )
 ''');
-
 
   }
 
@@ -57,16 +60,16 @@ class NotesDatabase {
 
 
   ///Category TABLE Operations
-  //Create Category
+  //Create checklisy
   Future<CheckListCategory> create(CheckListCategory note) async {
     final db = await instance.database;
 
-    final id = await db.insert(checkListCategory, note.toJson());
+    final id = await db.insert(checkLists, note.toJson());
     return note.copy(id: id);
   }
 
   //Fetch Lists
-  Future<CheckListCategory> readNote(int id) async {
+  Future<CheckListCategory> readcheckLists(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
@@ -121,4 +124,64 @@ class NotesDatabase {
   /// CheckList Table Operations
 
 
+  ///Category TABLE Operations
+  //Create Category
+  Future<CheckLists> createCheckList(CheckLists note) async {
+    final db = await instance.database;
+
+    final id = await db.insert(checklists, note.toJson());
+    return note.copy(id: id);
+  }
+
+  //Fetch Lists
+  Future<CheckLists> readCheckLists(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      checkLists,
+      columns: CheckListsData.values,
+      where: '${CheckListsData.categoryId} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return CheckListCategory.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  //Get category from database
+  Future<List<CheckListCategory>> readAllNotes() async {
+    final db = await instance.database;
+
+    const orderBy = '${CheckListCategoryData.time} ASC';
+    final result = await db.query(checkListCategory, orderBy: orderBy);
+
+    return result.map((json) => CheckListCategory.fromJson(json)).toList();
+  }
+
+  //Update Category
+  Future<int> update(CheckListCategory note) async {
+    final db = await instance.database;
+
+    return db.update(
+      checkListCategory,
+      //CheckListCategory.toJson(),
+      note.toJson(),
+      where: '${CheckListCategoryData.id} = ?',
+      whereArgs: [note.id],
+    );
+  }
+
+  //Delete Category from Data Base
+  Future<int> delete(int id) async {
+    final db = await instance.database;
+
+    return await db.delete(
+      checkListCategory,
+      where: '${CheckListCategoryData.id} = ?',
+      whereArgs: [id],
+    );
+  }
 }

@@ -54,6 +54,7 @@ class CheckListsData {
   static const String id = '_id';
   static const String categoryId = 'categoryId';
   static const String checkList = 'checkList';
+  static const String checkListStatus = 'checkListStatus';
   static const String time = 'time';
 }
 
@@ -61,12 +62,14 @@ class CheckLists {
   final int? id;
   final int categoryId;
   final String checkList;
+  final bool checkListSatus;
   final DateTime createdTime;
 
   const CheckLists({
     this.id,
     required this.categoryId,
     required this.checkList,
+    required this.checkListSatus,
     required this.createdTime,
   });
 
@@ -74,12 +77,14 @@ class CheckLists {
     int? id,
     int? categoryId,
     String? checkList,
+    bool? checkListStatus,
     DateTime? createdTime,
   }) =>
       CheckLists(
         id: id ?? this.id,
         categoryId: categoryId ?? this.categoryId,
         checkList: checkList ?? this.checkList,
+        checkListSatus: checkListStatus ?? this.checkListSatus,
         createdTime: createdTime ?? this.createdTime,
       );
 
@@ -87,6 +92,7 @@ class CheckLists {
         id: json[CheckListsData.id] as int?,
         categoryId: json[CheckListsData.categoryId] as int,
         checkList: json[CheckListsData.checkList] as String,
+        checkListSatus: json[CheckListsData.checkListStatus] as bool,
         createdTime: DateTime.parse(json[CheckListCategoryData.time] as String),
       );
 
@@ -94,6 +100,7 @@ class CheckLists {
     CheckListsData.id: id,
     CheckListsData.categoryId: categoryId,
     CheckListsData.checkList: checkList,
+    CheckListsData.checkListStatus: checkListSatus,
     CheckListsData.time: createdTime,
   };
 
