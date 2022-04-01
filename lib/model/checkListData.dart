@@ -34,7 +34,7 @@ class CheckListCategory {
       );
 
   static CheckListCategory fromJson(Map<String, Object?> json) =>
-      CheckListCategory(
+      CheckListCategory (
         id: json[CheckListCategoryData.id] as int?,
         category: json[CheckListCategoryData.category] as String,
         createdTime: DateTime.parse(json[CheckListCategoryData.time] as String),
@@ -49,13 +49,14 @@ class CheckListCategory {
 
 ///Checklist Data
 class CheckListsData {
-  static final List<String> values = [id, categoryId, checkList, time];
+  static final List<String> values = [id, categoryId, checkList, checkListStatus, time];
 
   static const String id = '_id';
   static const String categoryId = 'categoryId';
   static const String checkList = 'checkList';
   static const String checkListStatus = 'checkListStatus';
   static const String time = 'time';
+
 }
 
 class CheckLists {
@@ -89,10 +90,11 @@ class CheckLists {
       );
 
   static CheckLists fromJson(Map<String, Object?> json) => CheckLists (
+
         id: json[CheckListsData.id] as int?,
         categoryId: json[CheckListsData.categoryId] as int,
         checkList: json[CheckListsData.checkList] as String,
-        checkListSatus: json[CheckListsData.checkListStatus] as bool,
+        checkListSatus: json[CheckListsData.checkListStatus] == 1,
         createdTime: DateTime.parse(json[CheckListCategoryData.time] as String),
       );
 
@@ -100,8 +102,8 @@ class CheckLists {
     CheckListsData.id: id,
     CheckListsData.categoryId: categoryId,
     CheckListsData.checkList: checkList,
-    CheckListsData.checkListStatus: checkListSatus,
-    CheckListsData.time: createdTime,
+    CheckListsData.checkListStatus: checkListSatus ? 1 : 0,
+    CheckListsData.time: createdTime.toIso8601String(),
   };
 
 }

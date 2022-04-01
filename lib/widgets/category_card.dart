@@ -30,10 +30,10 @@ class NoteCardWidget extends StatelessWidget {
 
     return Card(
       color: color,
-      child: Container(
+      child: Container (
         constraints: BoxConstraints(minHeight: minHeight),
         padding: EdgeInsets.all(8),
-        child: Column(
+        child: Column (
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

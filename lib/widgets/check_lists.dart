@@ -4,13 +4,11 @@ class NoteFormWidget extends StatelessWidget {
   final String? category;
   final String? description;
   final ValueChanged<String> onChangedCategory;
-  final ValueChanged<String>? onChangedDescription;
 
   const NoteFormWidget({
     Key? key,
     this.category = '',
     this.description = '',
-    this.onChangedDescription,
     required this.onChangedCategory,
   }) : super(key: key);
 
@@ -33,15 +31,15 @@ class NoteFormWidget extends StatelessWidget {
   Widget buildTitle() => TextFormField(
         maxLines: 1,
         initialValue: category,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white70,
           fontWeight: FontWeight.bold,
           fontSize: 24,
         ),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           border: InputBorder.none,
           hintText: 'Title',
-          hintStyle: TextStyle(color: Colors.white70),
+          hintStyle: const TextStyle(color: Colors.white70),
         ),
         validator: (title) => title != null && title.isEmpty
             ? 'The category cannot be empty'
@@ -52,15 +50,11 @@ class NoteFormWidget extends StatelessWidget {
   Widget buildDescription() => TextFormField(
         maxLines: 5,
         initialValue: description,
-        style: TextStyle(color: Colors.white60, fontSize: 18),
-        decoration: InputDecoration(
+        style: const TextStyle(color: Colors.white60, fontSize: 18),
+        decoration: const InputDecoration(
           border: InputBorder.none,
           hintText: 'Type something...',
           hintStyle: TextStyle(color: Colors.white60),
         ),
-        validator: (title) => title != null && title.isEmpty
-            ? 'The description cannot be empty'
-            : null,
-        onChanged: onChangedDescription,
       );
 }

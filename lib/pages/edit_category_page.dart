@@ -3,24 +3,21 @@ import '../db/checkListDatabase.dart';
 import '../model/checkListData.dart';
 import '../widgets/check_lists.dart';
 
-class AddEditNotePage extends StatefulWidget {
+class AddEditCategoryPage extends StatefulWidget {
   final CheckListCategory? note;
 
-  const AddEditNotePage({
+  const AddEditCategoryPage({
     Key? key,
     this.note,
   }) : super(key: key);
 
   @override
-  _AddEditNotePageState createState() => _AddEditNotePageState();
+  _AddEditCategoryPageState createState() => _AddEditCategoryPageState();
 }
 
-class _AddEditNotePageState extends State<AddEditNotePage> {
+class _AddEditCategoryPageState extends State<AddEditCategoryPage> {
   final _formKey = GlobalKey<FormState>();
 
-  // late bool isImportant;
-  // late int number;
-  // late String title;
   late String category;
 
   @override
@@ -32,6 +29,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          title: Text('Add Category'),
           actions: [buildButton()],
         ),
         body: Form(
@@ -47,7 +45,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
           child: Icon(Icons.add),
           onPressed: () async {
             await Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => AddEditNotePage()),
+              MaterialPageRoute(builder: (context) => AddEditCategoryPage()),
             );
 
             //add refresh opration;
@@ -101,6 +99,6 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       createdTime: DateTime.now(),
     );
 
-    await NotesDatabase.instance.create(note);
+    await NotesDatabase.instance.createCategory(note);
   }
 }
