@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_checklist/pages/notes_page.dart';
+import 'package:my_checklist/pages/category_page.dart';
 
 
 Future main() async {
@@ -20,12 +20,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     title: title,
+
     themeMode: ThemeMode.dark,
     theme: ThemeData(
-      primaryColor: Colors.black,
-      scaffoldBackgroundColor: Colors.blueGrey.shade900,
+      primaryColor: Colors.white,
+      scaffoldBackgroundColor: Colors.white10,
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.pink,
         elevation: 0,
       ),
     ),

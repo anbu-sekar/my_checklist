@@ -3,22 +3,21 @@ import '../db/checkListDatabase.dart';
 import '../model/checkListData.dart';
 import '../widgets/check_lists.dart';
 
-class AddEditNotePage extends StatefulWidget {
+class AddEditCategoryPage extends StatefulWidget {
   final CheckListCategory? note;
 
-  const AddEditNotePage({
+  const AddEditCategoryPage({
     Key? key,
     this.note,
   }) : super(key: key);
+
   @override
-  _AddEditNotePageState createState() => _AddEditNotePageState();
+  _AddEditCategoryPageState createState() => _AddEditCategoryPageState();
 }
 
-class _AddEditNotePageState extends State<AddEditNotePage> {
+class _AddEditCategoryPageState extends State<AddEditCategoryPage> {
   final _formKey = GlobalKey<FormState>();
-  // late bool isImportant;
-  // late int number;
-  // late String title;
+
   late String category;
 
   @override
@@ -29,30 +28,30 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      actions: [buildButton()],
-    ),
-    body: Form (
-      key: _formKey,
-      child:  NoteFormWidget(
-        category: category,
-        onChangedCategory: (category) =>
-            setState(() => this.category = category),
-      ),
+        appBar: AppBar(
+          title: Text('Add Category'),
+          actions: [buildButton()],
+        ),
+        body: Form(
+          key: _formKey,
+          child: NoteFormWidget(
+            category: category,
+            onChangedCategory: (category) =>
+                setState(() => this.category = category),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          child: Icon(Icons.add),
+          onPressed: () async {
+            await Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => AddEditCategoryPage()),
+            );
 
-    ),
-    floatingActionButton: FloatingActionButton(
-      backgroundColor: Colors.black,
-      child: Icon(Icons.add),
-      onPressed: () async {
-        await Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => AddEditNotePage()),
-        );
-
-        //add refresh opration;
-      },
-    ),
-  );
+            //add refresh opration;
+          },
+        ),
+      );
 
   Widget buildButton() {
     final isFormValid = category.isNotEmpty && category.isNotEmpty;
@@ -95,11 +94,11 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   }
 
   Future addNote() async {
-    final note = CheckListCategory (
+    final note = CheckListCategory(
       category: category,
       createdTime: DateTime.now(),
     );
 
-    await NotesDatabase.instance.create(note);
+    await NotesDatabase.instance.createCategory(note);
   }
 }

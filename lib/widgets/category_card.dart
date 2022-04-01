@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../model/checkListData.dart';
 
-
 final _lightColors = [
   Colors.amber.shade300,
   Colors.lightGreen.shade300,
@@ -31,10 +30,10 @@ class NoteCardWidget extends StatelessWidget {
 
     return Card(
       color: color,
-      child: Container(
+      child: Container (
         constraints: BoxConstraints(minHeight: minHeight),
         padding: EdgeInsets.all(8),
-        child: Column(
+        child: Column (
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

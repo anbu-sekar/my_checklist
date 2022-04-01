@@ -3,7 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../db/checkListDatabase.dart';
 import '../model/checkListData.dart';
 import '../widgets/category_card.dart';
-import 'edit_note_page.dart';
+import 'edit_category_page.dart';
 import 'note_detail_page.dart';
 
 class NotesPage extends StatefulWidget {
@@ -31,7 +31,7 @@ class _NotesPageState extends State<NotesPage> {
   Future refreshNotes() async {
     setState(() => isLoading = true);
 
-    this.notes = await NotesDatabase.instance.readAllNotes();
+    this.notes = await NotesDatabase.instance.readCategoryLists();
 
     setState(() => isLoading = false);
   }
@@ -49,7 +49,7 @@ class _NotesPageState extends State<NotesPage> {
           child: isLoading
               ? CircularProgressIndicator()
               : notes.isEmpty
-                  ? const Text (
+                  ? const Text(
                       'Create Category',
                       style: TextStyle(color: Colors.white, fontSize: 24),
                     )
@@ -60,7 +60,7 @@ class _NotesPageState extends State<NotesPage> {
           child: const Icon(Icons.add),
           onPressed: () async {
             await Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => AddEditNotePage()),
+              MaterialPageRoute(builder: (context) => AddEditCategoryPage()),
             );
 
             refreshNotes();
